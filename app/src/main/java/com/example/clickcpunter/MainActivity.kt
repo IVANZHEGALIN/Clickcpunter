@@ -33,9 +33,22 @@ class MainActivity : AppCompatActivity() {
             count = dao.getAll().firstOrNull()?.count ?: 0
             bildingclass?.textView?.text = count.toString()
         } // происходмит передача данных в фоновом режиме
+
+
+
+
         bildingclass?.buttonCounter?.setOnClickListener {
             viewModels.setColor(Color.GREEN)
             count++
+            bildingclass?.textView?.text = count.toString()
+            lifecycleScope.launch {
+                dao.insert(Entity(1, count))
+            }// происходит запис в фоновом режиме
+        }
+
+        bildingclass?.buttonCount?.setOnClickListener {
+            viewModels.setColor(Color.MAGENTA)
+            count--
             bildingclass?.textView?.text = count.toString()
             lifecycleScope.launch {
                 dao.insert(Entity(1, count))
